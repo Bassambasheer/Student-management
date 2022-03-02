@@ -44,7 +44,7 @@ const  StudentDetails({required this.data, Key? key}) : super(key: key);
                 children: [
                   const TextWidget(title: "FULL NAME\t :",),
                   height10,
-                  TextWidget(title: data.name),
+                  TextWidget(title: data.name.toUpperCase()),
                 ],
               ),
              space,
@@ -70,8 +70,7 @@ const  StudentDetails({required this.data, Key? key}) : super(key: key);
                   height10,
                   TextWidget(title: data.admno),
                ],
-             ),
-             
+             ),            
             ],
           ),
         ),

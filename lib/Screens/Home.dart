@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AddData.dart';
+import 'package:flutter_application_1/Screens/AddData.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
-import 'package:flutter_application_1/search_page.dart';
-import 'package:flutter_application_1/studentdetails.dart';
+import 'package:flutter_application_1/Screens/search_page.dart';
+import 'package:flutter_application_1/Screens/studentdetails.dart';
 import 'package:flutter_application_1/widgets/constants.dart';
 import 'package:flutter_application_1/Controller/controller.dart';
 import 'package:get/get.dart';

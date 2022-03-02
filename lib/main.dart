@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home.dart';
+import 'package:flutter_application_1/Screens/Home.dart';
 import 'package:flutter_application_1/db/model/data_model.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';

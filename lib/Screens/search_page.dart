@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home.dart';
+import 'package:flutter_application_1/Screens/Home.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
-import 'package:flutter_application_1/studentdetails.dart';
+import 'package:flutter_application_1/Screens/studentdetails.dart';
 import 'package:flutter_application_1/Controller/controller.dart';
 import 'package:get/get.dart';
 
