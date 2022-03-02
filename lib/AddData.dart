@@ -2,119 +2,92 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/db/model/data_model.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_application_1/widgets/constants.dart';
+import 'package:flutter_application_1/Controller/controller.dart';
+import 'package:flutter_application_1/widgets/text_field_widget.dart';
+import 'package:get/get.dart';
 
-class AddData extends StatefulWidget {
+class AddData extends StatelessWidget {
   AddData({this.data, Key? key}) : super(key: key);
   StudentModel? data;
 
-  @override
-  State<AddData> createState() => _AddDataState();
-}
+  final _nameController = TextEditingController();
 
-class _AddDataState extends State<AddData> {
-  File? image;
+  final _ageController = TextEditingController();
 
-  String img = '';
+  final _classController = TextEditingController();
 
-  TextEditingController _nameController = TextEditingController();
-
-  TextEditingController _ageController = TextEditingController();
-
-  TextEditingController _classController = TextEditingController();
-
-  TextEditingController _admnoController = TextEditingController();
+  final _admnoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    if (widget.data != null) {
-      _nameController.text = widget.data!.name;
-      _ageController.text = widget.data!.age;
-      _classController.text = widget.data!.cls;
-      _admnoController.text = widget.data!.admno;
-      img = widget.data!.img;
+    final Controller _controller = Get.put(Controller());
+    if (data != null) {
+      _nameController.text = data!.name;
+      _ageController.text = data!.age;
+      _classController.text = data!.cls;
+      _admnoController.text = data!.admno;
+      img = data!.img;
     }
     return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
-        title: Text("Registration Form"),
+        backgroundColor: black,
+        title: const Text("Registration Form"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Full Name"),
-              textInputAction: TextInputAction.next,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 25,
-            ),
-            TextField(
-              controller: _ageController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Age"),
-              textInputAction: TextInputAction.next,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 25,
-            ),
-            TextField(
-              controller: _classController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Class"),
-              textInputAction: TextInputAction.next,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 25,
-            ),
-            TextField(
-              controller: _admnoController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Admission Number"),
-              textInputAction: TextInputAction.done,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 25,
-            ),
-            image != null ? Image.file(image!) : Container(),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                GetBuilder<Controller>(
+                  builder: (controller) {
+                    return Container(
+            height: 100,
+            width: 100,
+          decoration: const BoxDecoration(
+            image: DecorationImage(image: NetworkImage("https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"))
+          ),
+            child: img.trim().isNotEmpty ? CircleAvatar(
+              backgroundImage: MemoryImage(
+                Base64Decoder().convert(img)
+              ),
+            ): Container(),
+          );
+                  }
+                ),
             IconButton(
-              onPressed: () async {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                final pickedImage =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedImage == null) {
-                  return;
-                } else {
-                  image = File(pickedImage.path);
-                  setState(() {});
-                  final bytes = File(pickedImage.path).readAsBytesSync();
-                  img = base64Encode(bytes);
-                }
-              },
-              icon: Icon(Icons.add_a_photo),
+                  onPressed: () async {
+                    _controller.pickimage();
+                  },
+                  icon: const Icon(Icons.add_a_photo),
             ),
-            ElevatedButton(
+               ],
+             ),
+             space,
+            AddDataField(controller: _nameController, text: "Full Name"),
+            space,
+            AddDataField(controller: _ageController, text: "Age"),
+            space,
+            AddDataField(controller: _classController, text: "Class"),
+            space,
+            AddDataField(
+                controller: _admnoController, text: "Admission Number"),
+            space,
+            MaterialButton(
+                textColor: Colors.white,
+                color: Colors.black,
                 onPressed: () {
-                  FocusScopeNode currentFocus = FocusScope.of(context);
-                  if (widget.data == null) {
+                  if (data == null) {
                     onAdd();
-                    print(img.length);
                   } else {
                     onEdit();
                   }
-                  // Navigator.of(context)
-                  //     .pop(MaterialPageRoute(builder: (ctx) => HomeScreen()));
                 },
-                child: Text("Save")),
+                child: const Text("Save")),
           ],
         ),
       ),
@@ -131,15 +104,14 @@ class _AddDataState extends State<AddData> {
         _class.isEmpty ||
         _admno.isEmpty ||
         img.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Details Missing , Try adding Every Fields")));
+      Get.snackbar("Error", "Try Adding every fields",
+          snackPosition: SnackPosition.BOTTOM);
       return;
     }
     final _student = StudentModel(
         name: _name, age: _age, cls: _class, admno: _admno, img: img);
     addStudent(_student);
-    Navigator.of(context)
-        .pop(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+    Get.back();
   }
 
   Future<void> onEdit() async {
@@ -155,14 +127,13 @@ class _AddDataState extends State<AddData> {
       return;
     }
     final _student = StudentModel(
-        id: widget.data!.id,
+        id: data!.id,
         name: _name,
         age: _age,
         cls: _class,
         admno: _admno,
         img: img);
     editStudent(_student);
-   Navigator.of(context)
-        .pop(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+    Get.back();
   }
 }

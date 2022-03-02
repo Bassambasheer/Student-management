@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  get: ^4.6.1
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.1
@@ -69,11 +70,9 @@ flutter:
     - family: Roboto
       fonts:
         - asset: fonts/RobotoCondensed-Bold.ttf
-  #       - asset: fonts/RobotoCondensed-Italic.ttf
+    #       - asset: fonts/RobotoCondensed-Italic.ttf
     - family: Shizuru
       fonts:
         - asset: fonts/Shizuru-Regular.ttf
-       
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

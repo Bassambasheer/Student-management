@@ -1,23 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/db/model/data_model.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
-ValueNotifier<List<StudentModel>> studentListNotifier = ValueNotifier([]);
+RxList<StudentModel> getController = <StudentModel>[].obs;
+RxList<StudentModel> controllerSearch = <StudentModel>[].obs;
 
 addStudent(StudentModel value) async {
   final studentDB = await Hive.openBox<StudentModel>('student_db');
   final id = await studentDB.add(value);
   value.id = id;
   await studentDB.put(id, value);
-  studentListNotifier.value.add(value);
-  studentListNotifier.notifyListeners();
+  getController.clear();
+  getController.addAll(studentDB.values);
 }
 
 Future<void> getAllStudents() async {
   final studentDB = await Hive.openBox<StudentModel>('student_db');
-  studentListNotifier.value.clear();
-  studentListNotifier.value.addAll(studentDB.values);
-  studentListNotifier.notifyListeners();
+  getController.clear();
+  getController.addAll(studentDB.values);
 }
 
 Future<void> deleteStudent(int id) async {
@@ -37,3 +37,4 @@ clear() async {
   await studentDB.clear();
   getAllStudents();
 }
+

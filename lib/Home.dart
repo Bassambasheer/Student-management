@@ -1,102 +1,100 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AddData.dart';
-import 'package:flutter_application_1/db/model/data_model.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
 import 'package:flutter_application_1/search_page.dart';
 import 'package:flutter_application_1/studentdetails.dart';
+import 'package:flutter_application_1/widgets/constants.dart';
+import 'package:flutter_application_1/Controller/controller.dart';
+import 'package:get/get.dart';
 
 var images;
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     getAllStudents();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: black,
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (ctx2) => AddData()));
+          img = '';
+          Get.to(AddData());
         },
         tooltip: 'Add New',
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: Text(
+        backgroundColor: black,
+        centerTitle: true,
+        title: const Text(
           "STUDENT DETAILS",
-          style: TextStyle(
-            fontFamily: 'Roboto',
-          ),
         ),
-        actions: [ElevatedButton.icon(onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const SearchPage()));
-          },
-          icon: Icon(Icons.search),
-          label: Text(''),
-          ),
-          ElevatedButton(
+        actions: [
+          IconButton(
               onPressed: () {
-                clear();
+                searchList("");
+                Get.to(SearchPage());
               },
-              child: Text("clear")),
-          
+              icon: Icon(Icons.search))
         ],
         automaticallyImplyLeading: false,
       ),
-      backgroundColor: Colors.blue[50],
-      body: SafeArea(
-          child: ValueListenableBuilder(
-        valueListenable: studentListNotifier,
-        builder:
-            (BuildContext ctx, List<StudentModel> studentList, Widget? child) {
+      backgroundColor: white,
+      body: SafeArea(child: Obx(
+        () {
           return ListView.separated(
               itemBuilder: (context, index) {
-                var data = studentList[index];
+                var data = getController[index];
                 var encodedimg = data.img;
                 images = Base64Decoder().convert(encodedimg);
-                return ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => StudentDetails(data: data)));
-                  },
-                  title: Text(data.name.toUpperCase()),
-                  leading: Image.memory(images),
-                  trailing: Wrap(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => AddData(data: data)));
-                          },
-                          icon: Icon(Icons.edit)),
-                      IconButton(
-                          onPressed: () {
-                            if (data.id != null) {
-                              deleteStudent(data.id!);
-                            }
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          )),
-                    ],
+                return Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Card(
+                    color: Colors.grey[200],
+                    child: ListTile(
+                      onTap: () {
+                        Get.to(StudentDetails(data: data));
+                      },
+                      title: Text(data.name.toUpperCase()),
+                      leading: Container(
+                        width: 50,height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          image: DecorationImage(image: MemoryImage(images))
+                        )
+                      ),
+                      trailing: Wrap(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Get.to(AddData(
+                                  data: data,
+                                ));
+                              },
+                              icon: Icon(Icons.edit)),
+                          IconButton(
+                              onPressed: () {
+                                if (data.id != null) {
+                                  deleteStudent(data.id!);
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              )),
+                        ],
+                      ),
+                    ),
                   ),
                 );
               },
               separatorBuilder: (ctx, index) {
-                return Divider();
+                return const SizedBox(height: 0);
               },
-              itemCount: studentList.length);
+              itemCount: getController.length);
         },
       )),
     );

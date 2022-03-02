@@ -1,80 +1,83 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home.dart';
 import 'package:flutter_application_1/db/model/data_model.dart';
-import 'package:flutter_application_1/db/model/functions/db_functions.dart';
+import 'package:flutter_application_1/widgets/constants.dart';
+import 'package:flutter_application_1/widgets/text_widget.dart';
 
-class StudentDetails extends StatefulWidget {
+class StudentDetails extends StatelessWidget {
   StudentDetails({required this.data, Key? key}) : super(key: key);
   StudentModel data;
-  @override
-  State<StudentDetails> createState() => _StudentDetailsState();
-}
-
-class _StudentDetailsState extends State<StudentDetails> {
+ 
   @override
   Widget build(BuildContext context) {
-     var encodedimg = widget.data.img ;
-    final imag = Base64Decoder().convert(encodedimg);
+     var encodedimg = data.img ;
+    final imag = const Base64Decoder().convert(encodedimg);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blue[300],
-        appBar: AppBar(),
+        backgroundColor: white,
+        appBar: AppBar(
+          backgroundColor: black,
+        ),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                color: Colors.black,
-                width: 5,
-              )),
-              child: ListView(
+          child: ListView(
+            children: [
+              Stack(
+                alignment: Alignment.centerRight,
                 children: [
                   Container(
-                      alignment: Alignment.topLeft,
-                      width: 100,
-                      height: 100,
-                      child: Image(image: MemoryImage(imag))),
-                  SizedBox(height: 30),
-                  Text(
-                    " Name                 : ${widget.data.name.toUpperCase()}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
+                    decoration: const BoxDecoration(
+                       color: black,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50))
                     ),
-                  ),
-                  SizedBox(
                     width: double.infinity,
-                    height: 20,
+                    height: 200,
                   ),
-                  Text(
-                    " Age                     : ${widget.data.age}",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 20,
-                  ),
-                  Text(
-                    " Class                  : ${widget.data.cls}",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 20,
-                  ),
-                  Text(
-                    " Admission No   : ${widget.data.admno}",
-                    style: TextStyle(color: Colors.black, fontSize: 18),
+                  Center(
+                    child: CircleAvatar(
+                        backgroundImage: MemoryImage(imag),radius: 60,),
                   ),
                 ],
               ),
-            ),
+             space,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const textWidget(title: "FULL NAME :",),
+                  height10,
+                  textWidget(title: data.name),
+                ],
+              ),
+             space,
+             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               children: [
+                 textWidget(title: "AGE :",),
+                  height10,
+                  textWidget(title: data.age),
+               ],
+             ),
+             space,
+             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               children: [
+                 textWidget(title: "CLASS :",),
+                  height10,
+                  textWidget(title: data.cls),
+               ],
+             ),
+             space,
+             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               children: [
+                 textWidget(title: "REG NO :",),
+                  height10,
+                  textWidget(title: data.admno),
+               ],
+             ),
+             
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+
