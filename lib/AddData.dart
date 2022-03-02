@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/db/model/data_model.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
@@ -10,17 +8,12 @@ import 'package:flutter_application_1/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
 
 class AddData extends StatelessWidget {
-  AddData({this.data, Key? key}) : super(key: key);
-  StudentModel? data;
-
+   AddData({this.data, Key? key}) : super(key: key);
+  final StudentModel? data;
   final _nameController = TextEditingController();
-
   final _ageController = TextEditingController();
-
   final _classController = TextEditingController();
-
   final _admnoController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final Controller _controller = Get.put(Controller());
@@ -53,7 +46,7 @@ class AddData extends StatelessWidget {
           ),
             child: img.trim().isNotEmpty ? CircleAvatar(
               backgroundImage: MemoryImage(
-                Base64Decoder().convert(img)
+                const Base64Decoder().convert(img)
               ),
             ): Container(),
           );

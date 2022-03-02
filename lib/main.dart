@@ -9,7 +9,7 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(StudentModelAdapter().typeId)) {
     Hive.registerAdapter(StudentModelAdapter());
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       theme: ThemeData(primaryColor: Colors.black,fontFamily: 'Roboto'),
     );
   }

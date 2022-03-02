@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/AddData.dart';
 import 'package:flutter_application_1/db/model/functions/db_functions.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_application_1/widgets/constants.dart';
 import 'package:flutter_application_1/Controller/controller.dart';
 import 'package:get/get.dart';
 
-var images;
+ var images;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           Get.to(AddData());
         },
         tooltip: 'Add New',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         backgroundColor: black,
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 searchList("");
                 Get.to(SearchPage());
               },
-              icon: Icon(Icons.search))
+              icon: const Icon(Icons.search))
         ],
         automaticallyImplyLeading: false,
       ),
@@ -49,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var data = getController[index];
                 var encodedimg = data.img;
-                images = Base64Decoder().convert(encodedimg);
+                images = const Base64Decoder().convert(encodedimg);
                 return Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Card(
@@ -74,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                                   data: data,
                                 ));
                               },
-                              icon: Icon(Icons.edit)),
+                              icon: const Icon(Icons.edit)),
                           IconButton(
                               onPressed: () {
                                 if (data.id != null) {

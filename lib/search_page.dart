@@ -40,7 +40,7 @@ class SearchPage extends StatelessWidget{
                       itemBuilder: (context, index) {
                         var data = controllerSearch[index];
                         var encodedimg = data.img;
-                        images = Base64Decoder().convert(encodedimg);
+                        images = const Base64Decoder().convert(encodedimg);
                         if (data.name
                             .toLowerCase()
                             .contains(searchController.text.toLowerCase())) {
@@ -65,7 +65,7 @@ class SearchPage extends StatelessWidget{
                         }
                       },
                       separatorBuilder: (ctx, index) {
-                        return SizedBox(height: 4);
+                        return const SizedBox(height: 4);
                       },
                       itemCount: controllerSearch.length),
                 );

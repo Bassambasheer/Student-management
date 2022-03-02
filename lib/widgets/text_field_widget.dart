@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddDataField extends StatelessWidget {
   final TextEditingController controller;
   final String text;
-  AddDataField({
+  const AddDataField({
     Key? key,
     required this.controller,required this.text,
   }) : super(key: key);
@@ -13,7 +13,7 @@ class AddDataField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration:  InputDecoration(
-          border: OutlineInputBorder(), hintText: text),
+          border: const OutlineInputBorder(), hintText: text),
       textInputAction: TextInputAction.next,
     );
   }

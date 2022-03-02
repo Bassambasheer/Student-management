@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/constants.dart';
 
-class textWidget extends StatelessWidget {
+class TextWidget extends StatelessWidget {
  final  String title;
 
-  const textWidget({
+  const TextWidget({
     Key? key,
     required this.title,
   }) : super(key: key);

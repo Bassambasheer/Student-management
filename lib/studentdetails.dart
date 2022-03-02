@@ -5,8 +5,8 @@ import 'package:flutter_application_1/widgets/constants.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 
 class StudentDetails extends StatelessWidget {
-  StudentDetails({required this.data, Key? key}) : super(key: key);
-  StudentModel data;
+const  StudentDetails({required this.data, Key? key}) : super(key: key);
+ final StudentModel data;
  
   @override
   Widget build(BuildContext context) {
@@ -42,33 +42,33 @@ class StudentDetails extends StatelessWidget {
              space,
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const textWidget(title: "FULL NAME :",),
+                  const TextWidget(title: "FULL NAME\t :",),
                   height10,
-                  textWidget(title: data.name),
+                  TextWidget(title: data.name),
                 ],
               ),
              space,
              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: [
-                 textWidget(title: "AGE :",),
+                 const TextWidget(title: "AGE\t\t\t\t\t\t\t\t\t\t:",),
                   height10,
-                  textWidget(title: data.age),
+                  TextWidget(title: data.age),
                ],
              ),
              space,
              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: [
-                 textWidget(title: "CLASS :",),
+                 const TextWidget(title: "CLASS\t\t\t\t\t\t\t:",),
                   height10,
-                  textWidget(title: data.cls),
+                  TextWidget(title: data.cls),
                ],
              ),
              space,
              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: [
-                 textWidget(title: "REG NO :",),
+                 const TextWidget(title: "REG NO\t\t\t\t\t:",),
                   height10,
-                  textWidget(title: data.admno),
+                  TextWidget(title: data.admno),
                ],
              ),
              
